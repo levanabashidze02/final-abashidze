@@ -20,7 +20,7 @@ function Home() {
     return (
         <>
             <div className="home-cont">
-                <img className="banner-image" alt="Banner Image" src="https://tmssl.akamaized.net/images/foto/galerie/budu-zivzivadze-ksc-2023-24-1707572612-129025.jpg?lm=1707572625" />
+                <img className="banner-image" alt="" src="https://tmssl.akamaized.net/images/foto/galerie/budu-zivzivadze-ksc-2023-24-1707572612-129025.jpg?lm=1707572625" />
                 <div className="banner-text">Budu Shop</div>
 
             </div>
