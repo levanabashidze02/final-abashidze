@@ -1,0 +1,38 @@
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header_navigation {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search {
+    padding: 5px;
+    margin-right: 10px;
+  }
+  
+  .search-icon {
+    width: 20px;
+    height: 20px;
+    fill: #888; 
+  }
+  
+  .button {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+  .authorization:hover {
+    background-color: #0056b3;
+  }
+  
