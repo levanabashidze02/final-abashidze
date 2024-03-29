@@ -17,8 +17,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/favorites" element={<Favorites />} /> {/* Add route for Favorites */}
+          <Route path="/search" element={<SearchResults />} /> 
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </div>
     </Router>

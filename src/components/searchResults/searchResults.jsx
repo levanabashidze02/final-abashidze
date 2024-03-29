@@ -1,49 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Product from '../product/product';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-function SearchResults() {
-  const query = useQuery();
-  const searchTerm = query.get('id');
-  const [searchResults, setSearchResults] = useState(null);
+const SearchResults = () => {
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const { search } = useLocation();
+  const query = new URLSearchParams(search).get('title') || '';
+  const [loading, setLoading] = useState(true);
+  const [displayCount, setDisplayCount] = useState(20);
 
   useEffect(() => {
-    if (searchTerm) {
-      fetch(`https://fakestoreapi.com/products/${searchTerm}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.id) {
-            setSearchResults([data]);
-          } else {
-            setSearchResults([]);
-          }
-        })
-        .catch(error => console.error('Error fetching search results:', error));
-    }
-  }, [searchTerm]);
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+        // Filter products whose title includes the search query
+        const filteredProducts = data.filter(product => product.title.toLowerCase().includes(query.toLowerCase()));
+        setSearchedProducts(filteredProducts);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [query]);
+
+  const handleLoadMore = () => {
+    setDisplayCount(prevCount => prevCount + 20); // 
+  };
 
   return (
-    <div className="product-list">
-      <h1>Search Results for Product ID: {searchTerm}</h1>
-      {searchResults ? (
-        <div className="products">
-          {searchResults.map(product => (
-            <div key={product.id} className="product">
-              <h2>{product.title}</h2>
-              <img src={product.image} alt={product.title} />
-              <p>{product.description}</p>
-              <p>${product.price}</p>
-            </div>
-          ))}
-        </div>
+    <div className="search-results">
+      <h2>Search Results</h2>
+      {loading ? (
+        <p>Loading...</p>
+      ) : searchedProducts.length > 0 ? (
+        <>
+          <div className="search-results-list">
+            {searchedProducts.slice(0, displayCount).map(product => (
+              <Product key={product.id} product={product} />
+            ))}
+          </div>
+          {displayCount < searchedProducts.length && (
+            <button onClick={handleLoadMore}>Load More</button>
+          )}
+        </>
       ) : (
-        <p>No product found with ID: {searchTerm}</p>
+        <p>No results found.</p>
       )}
     </div>
   );
-}
+};
 
 export default SearchResults;

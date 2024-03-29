@@ -13,6 +13,12 @@ const Product = ({ product }) => {
         <p>${product.price}</p>
         <p>Product Code: <strong>{product.id}</strong></p>
       </div>
+        <Link to={`/product/${product.id}`}>
+        <div className="fav-button">
+          Read More
+          </div>
+        </Link>
+
     </div>
   );
 };

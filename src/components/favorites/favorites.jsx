@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Product from '../product/product';
 
 const Favorites = () => {
   const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
-    const favoriteProductIds = JSON.parse(localStorage.getItem(`favoriteProducts_${userId}`)) || [];
-    fetchFavoriteProducts(favoriteProductIds);
-  }, []);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Redirect to login if token doesn't exist
+      navigate('/login');
+    } else {
+      const favoriteProductIds = JSON.parse(localStorage.getItem(`favoriteProducts_${userId}`)) || [];
+      fetchFavoriteProducts(favoriteProductIds);
+    }
+  }, [navigate]);
 
   const fetchFavoriteProducts = (productIds) => {
     Promise.all(
@@ -36,16 +44,14 @@ const Favorites = () => {
       <div className="favorites-grid">
         {favoriteProducts.length === 0 ? (
           <p>There are no favorites.</p>
-        ) : (
-          favoriteProducts.map((product) => (
-            <div key={product.id} className="favorite-product">
-              <Product product={product} showButton={false} />
-              <button onClick={() => handleRemoveFromFavorites(product.id)} className="fav-button">
-                Remove {product.title} from Favorites
-              </button>
-            </div>
-          ))
-        )}
+        ) : favoriteProducts.map((product) => (
+          <div key={product.id} className="favorite-product">
+            <Product product={product} showButton={false} />
+            <button onClick={() => handleRemoveFromFavorites(product.id)} className="fav-button">
+              Remove {product.title} from Favorites
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

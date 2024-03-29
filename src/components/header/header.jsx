@@ -1,16 +1,23 @@
-// Header.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SearchIcon from '../assets/searchicon';
 import "./header.css";
 
 function Header() {
   const tokenTrue = localStorage.getItem('token');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId'); // Remove userId on logout
     window.location.href = '/';
+  };
+
+  const handleSearch = () => {
+    if (searchQuery.trim() !== '') {
+      // Redirect to search results page with the search query in the URL
+      window.location.href = `/search?title=${encodeURIComponent(searchQuery)}`;
+    }
   };
 
   return (
@@ -20,8 +27,16 @@ function Header() {
           type='text' 
           className="search" 
           placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch();
+            }
+          }}
         />
-        <button className="search-link">
+        {/* Use handleSearch function on button click */}
+        <button className="search-link" onClick={handleSearch}>
           <SearchIcon className="search-icon" />
         </button>
       </div>
