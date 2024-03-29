@@ -14,7 +14,6 @@ const SearchResults = () => {
       try {
         const response = await fetch('https://fakestoreapi.com/products');
         const data = await response.json();
-        // Filter products whose title includes the search query
         const filteredProducts = data.filter(product => product.title.toLowerCase().includes(query.toLowerCase()));
         setSearchedProducts(filteredProducts);
         setLoading(false);

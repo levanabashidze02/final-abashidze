@@ -15,7 +15,6 @@ function Header() {
 
   const handleSearch = () => {
     if (searchQuery.trim() !== '') {
-      // Redirect to search results page with the search query in the URL
       window.location.href = `/search?title=${encodeURIComponent(searchQuery)}`;
     }
   };
@@ -35,7 +34,6 @@ function Header() {
             }
           }}
         />
-        {/* Use handleSearch function on button click */}
         <button className="search-link" onClick={handleSearch}>
           <SearchIcon className="search-icon" />
         </button>

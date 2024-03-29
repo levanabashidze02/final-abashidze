@@ -17,7 +17,7 @@ function Login() {
     if (user) {
       const token = Math.random().toString(36).substr(2);
       localStorage.setItem('token', token);
-      localStorage.setItem('userId', user.userId.toString()); // Set the user ID to local storage
+      localStorage.setItem('userId', user.userId.toString()); 
       window.location.href = '/';
     } else {
       alert('Invalid email or password.');

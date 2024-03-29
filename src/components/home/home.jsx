@@ -1,4 +1,3 @@
-// Home.jsx
 import React, { useState, useEffect } from 'react';
 import "./home.css";
 import Product from '../product/product'; 

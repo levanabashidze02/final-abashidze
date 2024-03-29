@@ -4,13 +4,12 @@ import Product from '../product/product';
 
 const Favorites = () => {
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const navigate = useNavigate(); // Hook to navigate programmatically
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
     if (!token) {
-      // Redirect to login if token doesn't exist
       navigate('/login');
     } else {
       const favoriteProductIds = JSON.parse(localStorage.getItem(`favoriteProducts_${userId}`)) || [];
